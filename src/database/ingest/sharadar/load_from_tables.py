@@ -19,11 +19,77 @@ table_dict={
 		'schema': 'sharadar',
 		'table': 'actions'
 	},
+	'daily': {
+		'path': 'data/sharadar_daily.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'daily'
+	},
+	'events': {
+		'path': 'data/sharadar_events.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'events'
+	},
+	'indicators': {
+		'path': 'data/sharadar_indicators.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'indicators'
+	},
+	'sep': {
+		'path': 'data/sharadar_sep.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'sep'
+	},
 	'sf1': {
 		'path': 'data/sharadar_sf1.zip',
 		'compression': 'zip',
 		'schema': 'sharadar',
 		'table': 'sf1'
+	},
+	'sf2': {
+		'path': 'data/sharadar_sf2.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'sf2'
+	},
+	'sf3': {
+		'path': 'data/sharadar_sf3.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'sf3'
+	},
+	'sf3a': {
+		'path': 'data/sharadar_sf3a.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'sf3a'
+	},
+	'sf1': {
+		'path': 'data/sharadar_sf3b.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'sf3b'
+	},
+	'sfp': {
+		'path': 'data/sharadar_sfp.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'sfp'
+	},
+	'sp500': {
+		'path': 'data/sharadar_sp500.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'sp500'
+	},
+	'tickers': {
+		'path': 'data/sharadar_tickers.zip',
+		'compression': 'zip',
+		'schema': 'sharadar',
+		'table': 'tickers'
 	}
 }
 
@@ -35,7 +101,8 @@ for key, value in table_dict.items():
 	df=DataFrameExt(
 		pd.read_csv(
 			value['path'],
-			compression=value['compression']))
+			compression=value['compression'],
+			low_memory=False))
 	print('Table loaded.')
 	# Write to db.
 	print('Writing table to {schema}.{table}'.format(schema=value['schema'], table=value['table']))
