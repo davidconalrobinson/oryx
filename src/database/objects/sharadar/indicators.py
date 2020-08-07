@@ -1,29 +1,29 @@
 """
-Action class.
+Indicators class.
 """
 
 
 # Imports.
-from sqlalchemy import Column, DateTime, String, Numeric, BigInteger
+from sqlalchemy import Column, String, BigInteger
 from src.database.base import Base, create_schema
 
 
 # Set schema and table names.
 SCHEMA='sharadar'
-TABLENAME='actions'
+TABLENAME='indicators'
 
 
-class Action(Base):
+class Indicators(Base):
 	__table_args__={'schema' : SCHEMA}
 	__tablename__=TABLENAME
 	index=Column(BigInteger, primary_key=True)
-	date=Column(DateTime)
-	action=Column(String)
-	ticker=Column(String)
-	name=Column(String)
-	value=Column(Numeric)
-	contraticker=Column(String)
-	contraname=Column(String)
+	table=Column(String)
+	indicator=Column(String)
+	isfilter=Column(String)
+	isprimarykey=Column(String)
+	title=Column(String)
+	description=Column(String)
+	unittype=Column(String)
 
 
 	create_schema(Base, SCHEMA)

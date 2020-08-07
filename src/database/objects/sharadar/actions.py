@@ -4,7 +4,7 @@ Actions class.
 
 
 # Imports.
-from sqlalchemy import Column, DateTime, String, Numeric, BigInteger
+from sqlalchemy import Column, Date, String, Numeric, BigInteger
 from src.database.base import Base, create_schema
 
 
@@ -17,7 +17,7 @@ class Actions(Base):
 	__table_args__={'schema' : SCHEMA}
 	__tablename__=TABLENAME
 	index=Column(BigInteger, primary_key=True)
-	date=Column(DateTime)
+	date=Column(Date)
 	action=Column(String)
 	ticker=Column(String)
 	name=Column(String)
