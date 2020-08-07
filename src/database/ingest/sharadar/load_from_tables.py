@@ -67,7 +67,7 @@ table_dict={
 		'schema': 'sharadar',
 		'table': 'sf3a'
 	},
-	'sf1': {
+	'sf3b': {
 		'path': 'data/sharadar_sf3b.zip',
 		'compression': 'zip',
 		'schema': 'sharadar',
