@@ -111,7 +111,6 @@ for key, value in table_dict.items():
 		engine,
 		schema=value['schema'],
 		if_exists='append',
-		index=True,
-		index_label='index',
+		index=False,
 		chunksize=10000,
 		method=psql_insert_copy)

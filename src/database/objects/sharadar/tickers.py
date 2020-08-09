@@ -4,8 +4,8 @@ Tickers class.
 
 
 # Imports.
-from sqlalchemy import Column, Date, String, Numeric, BigInteger
-from src.database.base import Base, create_schema
+from sqlalchemy import Column, Date, String, Numeric
+from src.database.base import Base, create_schema, create_functions, create_triggers
 
 
 # Set schema and table names.
@@ -16,10 +16,9 @@ TABLENAME='tickers'
 class Tickers(Base):
 	__table_args__={'schema' : SCHEMA}
 	__tablename__=TABLENAME
-	index=Column(BigInteger, primary_key=True)
-	table=Column(String)
-	permaticker=Column(Numeric)
-	ticker=Column(String)
+	table=Column(String, primary_key=True)
+	permaticker=Column(Numeric, primary_key=True)
+	ticker=Column(String, primary_key=True)
 	name=Column(String)
 	exchange=Column(String)
 	isdelisted=Column(String)
@@ -48,3 +47,36 @@ class Tickers(Base):
 
 
 	create_schema(Base, SCHEMA)
+	create_functions(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True,
+		string_columns=[
+			'table',
+			'ticker',
+			'name',
+			'exchange',
+			'isdelisted',
+			'category',
+			'cusips',
+			'sicsector',
+			'sicindustry',
+			'famasector',
+			'famaindustry',
+			'sector',
+			'industry',
+			'scalemarketcap',
+			'scalerevenue',
+			'relatedtickers',
+			'currency',
+			'location',
+			'firstquarter',
+			'lastquarter',
+			'secfilings',
+			'companysite'])
+	create_triggers(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True)

@@ -4,8 +4,8 @@ Sf1 class.
 
 
 # Imports.
-from sqlalchemy import Column, Date, String, Numeric, BigInteger
-from src.database.base import Base, create_schema
+from sqlalchemy import Column, Date, String, Numeric
+from src.database.base import Base, create_schema, create_functions, create_triggers
 
 
 # Set schema and table names.
@@ -16,12 +16,11 @@ TABLENAME='sf1'
 class Sf1(Base):
 	__table_args__={'schema' : SCHEMA}
 	__tablename__=TABLENAME
-	index=Column(BigInteger, primary_key=True)
-	ticker=Column(String)
-	dimension=Column(String)
+	ticker=Column(String, primary_key=True)
+	dimension=Column(String, primary_key=True)
 	calendardate=Column(Date)
-	datekey=Column(Date)
-	reportperiod=Column(Date)
+	datekey=Column(Date, primary_key=True)
+	reportperiod=Column(Date, primary_key=True)
 	lastupdated=Column(Date)
 	accoci=Column(Numeric)
 	assets=Column(Numeric)
@@ -131,3 +130,14 @@ class Sf1(Base):
 
 
 	create_schema(Base, SCHEMA)
+	create_functions(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True,
+		string_columns=['ticker', 'dimension'])
+	create_triggers(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True)

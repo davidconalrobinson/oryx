@@ -4,8 +4,8 @@ Sf2 class.
 
 
 # Imports.
-from sqlalchemy import Column, Date, String, Numeric, BigInteger
-from src.database.base import Base, create_schema
+from sqlalchemy import Column, Date, String, Numeric
+from src.database.base import Base, create_schema, create_functions, create_triggers
 
 
 # Set schema and table names.
@@ -16,12 +16,11 @@ TABLENAME='sf2'
 class Sf2(Base):
 	__table_args__={'schema' : SCHEMA}
 	__tablename__=TABLENAME
-	index=Column(BigInteger, primary_key=True)
-	ticker=Column(String)
-	filingdate=Column(Date)
-	formtype=Column(String)
+	ticker=Column(String, primary_key=True)
+	filingdate=Column(Date, primary_key=True)
+	formtype=Column(String, primary_key=True)
 	issuername=Column(String)
-	ownername=Column(String)
+	ownername=Column(String, primary_key=True)
 	officertitle=Column(String)
 	isdirector=Column(String)
 	isofficer=Column(String)
@@ -40,7 +39,31 @@ class Sf2(Base):
 	dateexercisable=Column(Date)
 	priceexercisable=Column(Numeric)
 	expirationdate=Column(Date)
-	rownum=Column(Numeric)
+	rownum=Column(Numeric, primary_key=True)
 
 
 	create_schema(Base, SCHEMA)
+	create_functions(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True,
+		string_columns=[
+			'ticker',
+			'formtype',
+			'issuername',
+			'ownername',
+			'officertitle',
+			'isdirector',
+			'isofficer',
+			'istenpercentowner',
+			'securityadcode',
+			'transactioncode',
+			'securitytitle',
+			'directorindirect',
+			'natureofownership'])
+	create_triggers(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True)

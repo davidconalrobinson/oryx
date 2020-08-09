@@ -23,18 +23,18 @@ def psql_insert_copy(table, conn, keys, data_iter):
     Source: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-sql-method
     """
     # gets a DBAPI connection that can provide a cursor
-    dbapi_conn = conn.connection
+    dbapi_conn=conn.connection
     with dbapi_conn.cursor() as cur:
-        s_buf = StringIO()
-        writer = csv.writer(s_buf)
+        s_buf=StringIO()
+        writer=csv.writer(s_buf)
         writer.writerows(data_iter)
         s_buf.seek(0)
 
-        columns = ', '.join('"{}"'.format(k) for k in keys)
+        columns=', '.join('"{}"'.format(k) for k in keys)
         if table.schema:
-            table_name = '{}.{}'.format(table.schema, table.name)
+            table_name='{}.{}'.format(table.schema, table.name)
         else:
-            table_name = table.name
+            table_name=table.name
 
         sql = 'COPY {} ({}) FROM STDIN WITH CSV'.format(
             table_name, columns)

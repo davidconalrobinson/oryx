@@ -4,8 +4,8 @@ Sfp class.
 
 
 # Imports.
-from sqlalchemy import Column, Date, String, Numeric, BigInteger
-from src.database.base import Base, create_schema
+from sqlalchemy import Column, Date, String, Numeric
+from src.database.base import Base, create_schema, create_functions, create_triggers
 
 
 # Set schema and table names.
@@ -16,9 +16,8 @@ TABLENAME='sfp'
 class Sfp(Base):
 	__table_args__={'schema' : SCHEMA}
 	__tablename__=TABLENAME
-	index=Column(BigInteger, primary_key=True)
-	ticker=Column(String)
-	date=Column(Date)
+	ticker=Column(String, primary_key=True)
+	date=Column(Date, primary_key=True)
 	open=Column(Numeric)
 	high=Column(Numeric)
 	low=Column(Numeric)
@@ -30,3 +29,14 @@ class Sfp(Base):
 
 
 	create_schema(Base, SCHEMA)
+	create_functions(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True,
+		string_columns=['ticker'])
+	create_triggers(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True)

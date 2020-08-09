@@ -4,8 +4,8 @@ Sf3a class.
 
 
 # Imports.
-from sqlalchemy import Column, Date, String, Numeric, BigInteger
-from src.database.base import Base, create_schema
+from sqlalchemy import Column, Date, String, Numeric
+from src.database.base import Base, create_schema, create_functions, create_triggers
 
 
 # Set schema and table names.
@@ -16,9 +16,8 @@ TABLENAME='sf3a'
 class Sf3a(Base):
 	__table_args__={'schema' : SCHEMA}
 	__tablename__=TABLENAME
-	index=Column(BigInteger, primary_key=True)
-	calendardate=Column(Date)
-	ticker=Column(String)
+	calendardate=Column(Date, primary_key=True)
+	ticker=Column(String, primary_key=True)
 	name=Column(String)
 	shrholders=Column(Numeric)
 	cllholders=Column(Numeric)
@@ -49,3 +48,14 @@ class Sf3a(Base):
 
 
 	create_schema(Base, SCHEMA)
+	create_functions(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True,
+		string_columns=['ticker', 'name'])
+	create_triggers(
+		Base, 
+		schema=SCHEMA, 
+		tablename=TABLENAME, 
+		set_null_strings_to_empty=True)
