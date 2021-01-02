@@ -1,3 +1,6 @@
 data/*
 notebooks/*
 *.pyc
+src/backtester/*
+docs/*
+notebooks/*
